@@ -12,17 +12,17 @@ The progressbar style simulate the Youtube loading bar.
 
 Import `JavaScript` file
 
-````
+```html
 <script src="js/simple-progressbar-animate.js"></script>
-````
+```
 
 You can use it with the simple way
 
-````
+```html
 <script type="text/javascript">
     ProgressBar.animate('progress-bar', 3000 );
 </script>
-````
+```
 
 Where `'progress-var'` is the element Id will be animate and `3000` is the milliseconds of the animate duration.
  
@@ -30,29 +30,29 @@ Where `'progress-var'` is the element Id will be animate and `3000` is the milli
  
 If you need to know when the animation is finish you can use the the third parameter, finished callback.
 
-````
+```html
 <script type="text/javascript">  
     ProgressBar.animate('progress-bar', 3000, function (item) {
         // finished code
     });
 </script>
-````
+```
 
 #### InProgress Callback
  
 You can overwrite the progressbar while is running. Use InProgress Callback and implement your own animation
 
-````
+```html
 <script type="text/javascript">  
     ProgressBar.animate('progress-bar', 3000, null, function (item, position, elapsed, distance) {
         item.setAttribute("style", "width:" + position + "px");
     });
 </script>
-````
+```
 
 If you use that callback is recommended that use combine with Finished Callback to manage full animation.
  
-````
+```html
 <script type="text/javascript">  
     ProgressBar.animate('progress-bar', 3000, 
         function (item) {
@@ -63,7 +63,7 @@ If you use that callback is recommended that use combine with Finished Callback 
         }
     );
 </script>
-````
+```
 
 #License
 
