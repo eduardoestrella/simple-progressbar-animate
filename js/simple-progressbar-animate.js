@@ -23,6 +23,10 @@ var ProgressBar = (function () {
     var instance;
     var animationInterval;
 
+    /**
+     * Private Method
+     * Singleton instance
+     */
     function Singleton() {
         if (instance) {
             return instance;
@@ -30,16 +34,35 @@ var ProgressBar = (function () {
         instance = this;
     }
 
+    /**
+     * Private Method
+     * Reset the interval
+     */
     function reset() {
         clearInterval(animationInterval);
         animationInterval = undefined;
     }
 
+    /**
+     * Public Method
+     * Return the actual instance or create a new one if not exist
+     *
+     * @returns {*|Singleton}
+     */
     Singleton.getInstance = function () {
         return instance || new Singleton();
-    }
+    };
 
-    Singleton.animate = function (elementId, duration, callback) {
+    /**
+     * Public Method
+     * Animate the element by Id during a time and distance.
+     *
+     * @param elementId HTML element to animate
+     * @param duration duration of animation in milliseconds
+     * @param finishCallback Finished callback
+     * @param inProgressCallback overwrite in progress bar logic
+     */
+    Singleton.animate = function (elementId, duration, finishCallback, inProgressCallback) {
         // W3C - Minimum possible milliseconds of setInterval()
         var interval = 10;
 
@@ -58,22 +81,49 @@ var ProgressBar = (function () {
 
         function animation() {
             if (position == distance) {
+                // --------------------------------------------
+                // FINISHED ANIMATION
+                // --------------------------------------------
+
                 reset();
-                progressBar.setAttribute("style", "width:0px");
-                if(callback != undefined){
-                    callback();
+
+                if (inProgressCallback == undefined || inProgressCallback == null) {
+                    progressBar.setAttribute("style", "width:0px");
                 }
+
+                if (finishCallback != undefined && finishCallback != null) {
+                    finishCallback(progressBar);
+                }
+
+                // --------------------------------------------
             } else {
+                // --------------------------------------------
+                // IN PROGRESS ANIMATION
+                // --------------------------------------------
+
                 elapsed += interval;
                 position = elapsed * distance / duration;
-                progressBar.setAttribute("style", "width:" + position + "px");
+
+                if (inProgressCallback != undefined && inProgressCallback != null) {
+                    inProgressCallback(progressBar, position, elapsed, distance);
+                } else {
+                    progressBar.setAttribute("style", "width:" + position + "px");
+                }
+
+                // --------------------------------------------
             }
         }
-    }
+    };
 
+    /**
+     * Public Method
+     * Return is animate is still running
+     *
+     * @returns {boolean}
+     */
     Singleton.isLoading = function () {
         return animationInterval ? true : false;
-    }
+    };
 
     return Singleton;
 }());
