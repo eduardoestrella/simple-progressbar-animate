@@ -11,4 +11,4 @@ I decided to use Singleton pattern because the class wrap a setInterval instance
 GNU General Public License
 
 
-![GPLv3](https://commons.wikimedia.org/wiki/File%3AGPLv3_Logo.svg)
+![GPLv3](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/200px-GPLv3_Logo.svg.png)
